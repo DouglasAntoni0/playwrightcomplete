@@ -1,25 +1,71 @@
 // @ts-check
 import { test, expect } from '@playwright/test';
-import { time } from 'console';
+import { LandingPage } from './pages/LandingPage';
+
 
 test('deve cadastrar um lead na fila de espera', async ({ page }) => {
-  await page.goto('http://localhost:3000/');
+  const landingPage = new LandingPage(page);
 
-  await page.getByRole('button', {name: /Aperte o play/}).click();
+  await landingPage.visit();
 
-  expect(page.getByTestId('modal').getByRole('heading')).toHaveText('Fila de espera');
+  await landingPage.openLeadModal();
 
-  await page.locator('#name').fill('Douglas Antonio');
+  await landingPage.submitLeadForm('Douglas Antonio', 'douglas@zombieplus.com');
 
-  await page.getByPlaceholder('Seu email principal').fill('douglas@zombieplus.com');
+  const message = 'Agradecemos por compartilhar seus dados conosco. Em breve, nossa equipe entrará em contato!';
 
-  await page.getByTestId('modal')
-   .getByText('Quero entrar na fila!').click();
-
-  const message = 'Agradecemos por compartilhar seus dados conosco. Em breve, nossa equipe entrará em contato!'
-
-  await expect(page.locator('.toast')).toHaveText(message)
-
-  await expect(page.locator('.toast')).toBeHidden({timeout: 5000});
-
+  await landingPage.toastHaveText(message);
 });
+
+test('não deve cadastrar com email incorreto', async ({ page }) => {
+  const landingPage = new LandingPage(page);
+
+  await landingPage.visit();
+
+  await landingPage.openLeadModal();
+
+  await landingPage.submitLeadForm('Douglas Antonio', 'dougla.com');
+
+  await expect(page.locator('.alert')).toHaveText('Email incorreto');
+});
+
+test('não deve cadastrar quando o nome não é preenchido', async ({ page }) => {
+  const landingPage = new LandingPage(page);
+
+  await landingPage.visit();
+
+  await landingPage.openLeadModal();
+
+  await landingPage.submitLeadForm('', 'douglas@zombieplus.com');
+
+  await expect(page.locator('.alert')).toHaveText('Campo obrigatório');
+});
+
+test('não deve cadastrar quando o email não é preenchido', async ({ page }) => {
+  const landingPage = new LandingPage(page);
+
+  await landingPage.visit();
+
+  await landingPage.openLeadModal();
+
+  await landingPage.submitLeadForm('Douglas Antonio', '');
+
+  await expect(page.locator('.alert')).toHaveText('Campo obrigatório');
+});
+
+test('não deve cadastrar quando nenhum campo é preenchido', async ({ page }) => {
+  const landingPage = new LandingPage(page);
+
+  await landingPage.visit();
+
+  await landingPage.openLeadModal();
+
+  await landingPage.submitLeadForm('', '');
+
+  await expect(page.locator('.alert')).toContainText([
+    'Campo obrigatório',
+    'Campo obrigatório'
+  ]);
+});
+
+
