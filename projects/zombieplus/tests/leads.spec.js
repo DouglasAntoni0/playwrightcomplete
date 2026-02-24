@@ -1,10 +1,15 @@
-// @ts-check
+
 import { test, expect } from '@playwright/test';
 import { LandingPage } from './pages/LandingPage';
 
+let landingPage
+
+test.beforeEach(async ({page}) => {
+  landingPage = new LandingPage(page)
+})
+
 
 test('deve cadastrar um lead na fila de espera', async ({ page }) => {
-  const landingPage = new LandingPage(page);
 
   await landingPage.visit();
 
@@ -18,7 +23,6 @@ test('deve cadastrar um lead na fila de espera', async ({ page }) => {
 });
 
 test('não deve cadastrar com email incorreto', async ({ page }) => {
-  const landingPage = new LandingPage(page);
 
   await landingPage.visit();
 
@@ -26,11 +30,10 @@ test('não deve cadastrar com email incorreto', async ({ page }) => {
 
   await landingPage.submitLeadForm('Douglas Antonio', 'dougla.com');
 
-  await expect(page.locator('.alert')).toHaveText('Email incorreto');
+  await landingPage.alertHaveText('Email incorreto')
 });
 
 test('não deve cadastrar quando o nome não é preenchido', async ({ page }) => {
-  const landingPage = new LandingPage(page);
 
   await landingPage.visit();
 
@@ -38,11 +41,10 @@ test('não deve cadastrar quando o nome não é preenchido', async ({ page }) =>
 
   await landingPage.submitLeadForm('', 'douglas@zombieplus.com');
 
-  await expect(page.locator('.alert')).toHaveText('Campo obrigatório');
+  await landingPage.alertHaveText('Campo obrigatório');
 });
 
 test('não deve cadastrar quando o email não é preenchido', async ({ page }) => {
-  const landingPage = new LandingPage(page);
 
   await landingPage.visit();
 
@@ -50,7 +52,7 @@ test('não deve cadastrar quando o email não é preenchido', async ({ page }) =
 
   await landingPage.submitLeadForm('Douglas Antonio', '');
 
-  await expect(page.locator('.alert')).toHaveText('Campo obrigatório');
+  await landingPage.alertHaveText('Campo obrigatório');
 });
 
 test('não deve cadastrar quando nenhum campo é preenchido', async ({ page }) => {
@@ -62,7 +64,7 @@ test('não deve cadastrar quando nenhum campo é preenchido', async ({ page }) =
 
   await landingPage.submitLeadForm('', '');
 
-  await expect(page.locator('.alert')).toContainText([
+  await landingPage.alertHaveText([
     'Campo obrigatório',
     'Campo obrigatório'
   ]);
