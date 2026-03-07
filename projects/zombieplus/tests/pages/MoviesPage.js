@@ -14,16 +14,17 @@ export class MoviesPage {
    await this.page.locator('a[href$="register"]').click()
    await this.page.locator('#title').fill(title);
    await this.page.getByLabel('Sinopse').fill(overview);
+   
    await this.page.locator('#select_company_id .react-select__indicator').click();
    await this.page.locator('.react-select__option').filter({hasText: company}).click();
 
    await this.page.locator('#select_year .react-select__indicator').click();
-   await this.page.locator('.react-select__option').filter({hasText: release_year.toString()}).click();
+   
+   // A mágica acontece aqui: transforma em string e foge do undefined!
+   const yearStr = release_year ? release_year.toString() : '';
+   await this.page.locator('.react-select__option').filter({hasText: yearStr}).click();
 
    await this.page.getByRole('button', { name: 'Cadastrar' }).click();
-
-
-
  }
   
 }

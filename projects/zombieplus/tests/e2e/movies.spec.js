@@ -16,7 +16,7 @@ test.beforeEach(({ page }) => {
 
 test('deve cadastrar um novo filme', async ({ page }) => {
 
-  const movie = data.dawn_of_the_dead_1978
+  const movie = data.dawn_of_the_dead_1978;
 
   await loginPage.visit();
   await loginPage.submit('admin@zombieplus.com', 'pwd123');
