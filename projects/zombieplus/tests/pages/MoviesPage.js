@@ -18,7 +18,6 @@ export class MoviesPage {
     await this.page.locator('#select_company_id .react-select__indicator').click();
     await this.page.locator('.react-select__option').filter({hasText: company}).click();
 
-    // Só interage com o dropdown de ano SE o ano for enviado pelo teste!
     if (release_year) {
       await this.page.locator('#select_year .react-select__indicator').click();
       await this.page.locator('.react-select__option').filter({hasText: release_year.toString()}).click();

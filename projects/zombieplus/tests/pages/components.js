@@ -5,7 +5,6 @@ export class Toast {
     this.page = page;
   }
 
-  // Ensinando o truque novo pro Toast!
   async containText(message) {
     const toast = this.page.locator('.toast');
 
@@ -13,7 +12,6 @@ export class Toast {
     await expect(toast).not.toBeVisible({ timeout: 5000 });
   }
 
-  // Mantendo o truque antigo intacto
   async haveText(message) {
     const toast = this.page.locator('.toast');
 

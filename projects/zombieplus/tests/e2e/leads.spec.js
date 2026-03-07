@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { faker } from '@faker-js/faker'; // Padrão import chique!
+import { faker } from '@faker-js/faker';
 import { LandingPage } from '../pages/LandingPage';
 import { Toast } from '../pages/components';
 
@@ -20,14 +20,13 @@ test('deve cadastrar um lead na fila de espera', async ({ page }) => {
   await landingPage.submitLeadForm(leadName, leadEmail);
 
   const message = 'Agradecemos por compartilhar seus dados conosco. Em breve, nossa equipe entrará em contato!';
-  await toast.containText(message);
+  await toast.haveText(message);
 });
 
 test('não deve cadastrar quando um email ja existe', async ({ page, request }) => {
   const leadName = faker.person.fullName();
   const leadEmail = faker.internet.email();
 
-  // Criando o lead direto na API (Jogada de sênior!)
   const newLead = await request.post('http://localhost:3333/leads', {
     data: {
       name: leadName,
@@ -37,7 +36,6 @@ test('não deve cadastrar quando um email ja existe', async ({ page, request }) 
 
   expect(newLead.ok()).toBeTruthy();
 
-  // Tentando cadastrar de novo pela interface
   await landingPage.visit();
   await landingPage.openLeadModal();
   await landingPage.submitLeadForm(leadName, leadEmail);
