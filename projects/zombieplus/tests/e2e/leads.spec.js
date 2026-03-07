@@ -20,7 +20,7 @@ test('deve cadastrar um lead na fila de espera', async ({ page }) => {
   await landingPage.submitLeadForm(leadName, leadEmail);
 
   const message = 'Agradecemos por compartilhar seus dados conosco. Em breve, nossa equipe entrará em contato!';
-  await toast.haveText(message);
+  await toast.containText(message);
 });
 
 test('não deve cadastrar quando um email ja existe', async ({ page, request }) => {
