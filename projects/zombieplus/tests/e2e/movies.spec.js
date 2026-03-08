@@ -5,6 +5,8 @@ import { Toast } from '../pages/components';
 
 import data from '../support/fixtures/movies.json';
 
+const { executeSQL } = require('../support/database');
+
 let loginPage;
 let moviesPage;
 let toast;
@@ -16,7 +18,9 @@ test.beforeEach(({ page }) => {
 });
 
 test('deve cadastrar um novo filme', async ({ page }) => {
-  const movie = data.days_later_28_2002;
+  const movie = data.create;
+
+  await executeSQL(`DELETE FROM movies WHERE title = '${movie.title}';`)
 
   await loginPage.visit();
   await loginPage.submit('admin@zombieplus.com', 'pwd123');
