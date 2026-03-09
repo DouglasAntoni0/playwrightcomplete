@@ -10,8 +10,16 @@ export class MoviesPage {
     await expect(this.page).toHaveURL(/.*admin/);
   }
 
-  async create(title, overview, company, release_year) {
+  async goForm(){
     await this.page.locator('a[href$="register"]').click();
+  }
+
+  async submit(){
+    await this.page.getByRole('button', { name: 'Cadastrar' }).click();
+  }
+
+  async create(title, overview, company, release_year) {
+    await this.goForm();
     await this.page.locator('#title').fill(title);
     await this.page.getByLabel('Sinopse').fill(overview);
 
@@ -22,7 +30,11 @@ export class MoviesPage {
       await this.page.locator('#select_year .react-select__dropdown-indicator').click();
       await this.page.locator('.react-select__option').filter({ hasText: release_year.toString() }).click();
     }
+await this.submit();
+    
+  }
 
-    await this.page.getByRole('button', { name: 'Cadastrar' }).click();
+  async alertHaveText(target) {
+    await expect(this.page.locator('.alert')).toHaveText(target);
   }
 }
