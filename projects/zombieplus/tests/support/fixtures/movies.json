@@ -4,8 +4,8 @@
     "overview": "Um grupo de estranhos se refugia em uma casa rural enquanto mortos começam a se levantar e atacar os vivos.",
     "company": "Netflix",
     "release_year": 1978,
-    "featured": false,
-    "cover": "/images/night_of_the_living_dead_1968.png"
+    "featured": true,
+    "cover": "/covers/movies/dead-snow.jpg"
   },
   "dawn_of_the_dead_1978": {
     "title": "Dawn of the Dead",
@@ -13,7 +13,7 @@
     "company": "Universal Pictures",
     "release_year": 1978,
     "featured": false,
-    "cover": "/images/dawn_of_the_dead_1978.png"
+    "cover": "/covers/movies/exterminio.jpg"
   },
   "days_later_28_2002": {
     "title": "28 Days Later",
@@ -21,7 +21,7 @@
     "company": "Netflix",
     "release_year": 2002,
     "featured": false,
-    "cover": "/images/28_days_later_2002.png"
+    "cover": "/covers/movies/madrugada.jpg"
   },
   "world_war_z_2013": {
     "title": "World War Z",
