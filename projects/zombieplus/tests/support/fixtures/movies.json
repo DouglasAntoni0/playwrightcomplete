@@ -7,10 +7,10 @@
     "featured": true,
     "cover": "/covers/movies/dead-snow.jpg"
   },
-  "dawn_of_the_dead_1978": {
+  "duplicate": {
     "title": "Dawn of the Dead",
     "overview": "Sobreviventes se abrigam em um shopping center enquanto o mundo é tomado por uma epidemia zumbi incontrolável.",
-    "company": "Universal Pictures",
+    "company": "Netflix",
     "release_year": 1978,
     "featured": false,
     "cover": "/covers/movies/exterminio.jpg"
