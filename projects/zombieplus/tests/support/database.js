@@ -1,7 +1,7 @@
-const { Pool } = require('pg');
-const DbConfig = require('./fixtures/database');
+import { Pool } from 'pg';
+import DbConfig from './fixtures/database'; 
 
-async function executeSQL(sqlScript) {
+export async function executeSQL(sqlScript) {
   const pool = new Pool(DbConfig);
   const client = await pool.connect();
 
@@ -13,5 +13,3 @@ async function executeSQL(sqlScript) {
     await pool.end();
   }
 }
-
-module.exports = { executeSQL };

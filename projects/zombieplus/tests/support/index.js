@@ -1,4 +1,5 @@
-const { test: base, expect } = require('@playwright/test');
+import { test as base, expect } from '@playwright/test';
+import { Api } from './api';
 import { Leads } from './actions/Leads';
 import { Login } from './actions/Login';
 import { Movies } from './actions/Movies';
@@ -15,6 +16,12 @@ const test = base.extend({
 
     await use(context);
   },
+  request: async ({ request }, use) => {
+    const context = request;
+    context['api'] = new Api(request);
+
+    await use(context);
+  }
 });
 
 export { test, expect };
