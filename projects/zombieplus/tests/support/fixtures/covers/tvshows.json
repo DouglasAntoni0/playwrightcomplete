@@ -1,0 +1,29 @@
+{
+  "create": {
+    "title": "The Walking Dead Zumbi",
+    "overview": "O xerife Rick Grimes acorda de um coma e descobre que o mundo tá cheio de zumbis feios.",
+    "company": "AMC",
+    "release_year": 2010,
+    "seasons": 11,
+    "featured": true,
+    "cover": "/covers/tvshows/twd.png"
+  },
+  "duplicate": {
+    "title": "Fear The Walking Dead Zumbis",
+    "overview": "O começo do apocalipse zumbi focado em outra família que arruma muita confusão.",
+    "company": "AMC",
+    "release_year": 2015,
+    "seasons": 8,
+    "featured": false,
+    "cover": "/covers/tvshows/ftwd.png"
+  },
+  "to_remove": {
+    "title": "Z Nation",
+    "overview": "Um grupo tenta levar o único sobrevivente imune ao vírus através do país.",
+    "company": "Syfy",
+    "release_year": 2014,
+    "seasons": 5,
+    "featured": false,
+    "cover": "/covers/tvshows/404.png"
+  }
+}
