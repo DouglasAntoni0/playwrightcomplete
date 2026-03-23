@@ -4,6 +4,7 @@ import { Leads } from './actions/Leads';
 import { Login } from './actions/Login';
 import { Movies } from './actions/Movies';
 import { Popup } from './actions/components';
+import { TvShows } from './actions/tvshows';
 
 const test = base.extend({
   page: async ({ page }, use) => {
