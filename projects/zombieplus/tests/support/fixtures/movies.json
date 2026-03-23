@@ -23,60 +23,40 @@
     "featured": false,
     "cover": "/covers/movies/madrugada.jpg"
   },
-  "world_war_z_2013": {
-    "title": "World War Z",
+  "search":{  
+    "input": "zumbi",
+    "outputs": [
+      "World War Zumbi",
+      "Resident Evil Zumbi",
+      "Train to Busan Zumbi"
+
+    ],
+    "data": [
+      {
+    "title": "World War Zumbi",
     "overview": "Um ex-investigador da ONU viaja pelo mundo tentando encontrar a origem e uma cura para uma pandemia zumbi.",
     "company": "Paramount Pictures",
     "release_year": 2013,
     "featured": false,
     "cover": "/images/world_war_z_2013.png"
   },
-  "resident_evil_2002": {
-    "title": "Resident Evil",
+  {
+  "title": "Resident Evil Zumbi",
     "overview": "Após um vazamento biológico em um laboratório secreto, uma equipe enfrenta mortos-vivos e criaturas mutantes.",
-    "company": "Screen Gems",
+    "company": "Amazon Studios",
     "release_year": 2002,
     "featured": false,
     "cover": "/images/resident_evil_2002.png"
   },
-  "train_to_busan_2016": {
-    "title": "Train to Busan",
+  {
+    "title": "Train to Busan Zumbi",
     "overview": "Passageiros lutam para sobreviver quando uma infecção zumbi se espalha rapidamente dentro de um trem.",
-    "company": "Next Entertainment World",
+    "company": "Sony Pictures",
     "release_year": 2016,
     "featured": false,
     "cover": "/images/train_to_busan_2016.png"
-  },
-  "shaun_of_the_dead_2004": {
-    "title": "Shaun of the Dead",
-    "overview": "Um homem comum tenta salvar sua família durante um apocalipse zumbi com muito humor britânico.",
-    "company": "Universal Pictures",
-    "release_year": 2004,
-    "featured": false,
-    "cover": "/images/shaun_of_the_dead_2004.png"
-  },
-  "zombieland_2009": {
-    "title": "Zombieland",
-    "overview": "Um grupo improvável atravessa os Estados Unidos pós-apocalíptico enfrentando zumbis e criando regras de sobrevivência.",
-    "company": "Columbia Pictures",
-    "release_year": 2009,
-    "featured": false,
-    "cover": "/images/zombieland_2009.png"
-  },
-  "i_am_legend_2007": {
-    "title": "I Am Legend",
-    "overview": "Um cientista solitário tenta encontrar a cura para um vírus que devastou a humanidade.",
-    "company": "Warner Bros. Pictures",
-    "release_year": 2007,
-    "featured": false,
-    "cover": "/images/i_am_legend_2007.png"
-  },
-  "the_walking_dead_2010": {
-    "title": "The Walking Dead",
-    "overview": "Um policial lidera um grupo de sobreviventes em um mundo dominado por zumbis após acordar de um coma.",
-    "company": "AMC Networks",
-    "release_year": 2010,
-    "featured": false,
-    "cover": "/images/the_walking_dead_2010.png"
+  }
+
+    ]
   }
 }

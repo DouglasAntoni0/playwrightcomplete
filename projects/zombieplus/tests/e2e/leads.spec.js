@@ -1,6 +1,12 @@
 import { test, expect } from '../support';
 import { faker } from '@faker-js/faker';
 
+import { executeSQL } from '../support/database';
+
+test.beforeAll(async () => {
+  await executeSQL(`DELETE from leads`)
+})
+
 test('deve cadastrar um lead na fila de espera', async ({ page }) => {
   const leadName = faker.person.fullName();
   const leadEmail = faker.internet.email();

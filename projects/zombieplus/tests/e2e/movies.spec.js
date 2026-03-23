@@ -66,3 +66,21 @@ test('não deve cadastrar quando os campos obrigatórios não são preenchidos',
     'Campo obrigatório',
   ]);
 });
+
+test('deve realizar busca pelo termo zumbi', async ({ page, request }) => {
+  const movies = data.search;
+
+  for (const movie of movies.data) {
+    await executeSQL(`DELETE FROM movies WHERE title = '${movie.title}';`);
+  }
+
+  for (const movie of movies.data) {
+    await request.api.postMovie(movie);
+  }
+
+  await page.login.do('admin@zombieplus.com', 'pwd123', 'Admin');
+  await page.movies.search(movies.input);
+
+  await page.movies.tableHave(movies.outputs)
+
+});
