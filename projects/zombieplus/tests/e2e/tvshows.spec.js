@@ -1,65 +1,74 @@
 import { expect, test } from '../support';
-import data from '../support/fixtures/movies.json'; //mudar isso
+import data from '../support/fixtures/tvshows.json'; // Puxando o arquivo certo agora!
 import { executeSQL } from '../support/database';
 
 test('deve cadastrar uma nova série', async ({ page }) => {
-  const movie = data.create;
+  const tvshow = data.create;
 
-  await executeSQL(`DELETE FROM movies WHERE title = '${movie.title}';`);
+  // Limpando a bagunça na tabela certa
+  await executeSQL(`DELETE FROM tvshows WHERE title = '${tvshow.title}';`);
 
   await page.login.do('admin@zombieplus.com', 'pwd123', 'Admin');
 
-  await page.movies.create(
-    movie.title,
-    movie.overview,
-    movie.company,
-    movie.release_year,
-    movie.cover,
-    movie.featured
+  await page.tvshows.create(
+    tvshow.title,
+    tvshow.overview,
+    tvshow.company,
+    tvshow.release_year,
+    tvshow.seasons, // O nosso mais novo integrante da família
+    tvshow.cover,
+    tvshow.featured
   );
 
-  await page.popup.haveText(`O filme '${movie.title}' foi adicionado ao catálogo.`);
+  // Atenção: Confirme se no site aparece "A série" ou "O título". Coloquei "A série" seguindo a lógica.
+  await page.popup.haveText(`A série '${tvshow.title}' foi adicionada ao catálogo.`);
 });
 
-test('deve poder remover um filme', async ({ page, request }) => {
-  const movie = data.to_remove
-  await executeSQL(`DELETE FROM movies WHERE title = '${movie.title}';`);
-  await request.api.postMovie(movie)
+test('deve poder remover uma série', async ({ page, request }) => {
+  const tvshow = data.to_remove;
+  await executeSQL(`DELETE FROM tvshows WHERE title = '${tvshow.title}';`);
+  
+  // Confere lá no seu api/index.js se a função de cadastrar série via API é postTvshow mesmo!
+  await request.api.postTvshow(tvshow); 
+  
   await page.login.do('admin@zombieplus.com', 'pwd123', 'Admin');
 
-  await page.movies.remove(movie.title);
+  await page.tvshows.remove(tvshow.title);
 
-  await page.popup.haveText('Filme removido com sucesso.')
-
-})
+  await page.popup.haveText('Série removida com sucesso.');
+});
 
 test('não deve cadastrar quando o titulo já existe', async ({ page, request }) => {
-  const movie = data.duplicate;
-  await executeSQL(`DELETE FROM movies WHERE title = '${movie.title}';`);
+  const tvshow = data.duplicate;
+  await executeSQL(`DELETE FROM tvshows WHERE title = '${tvshow.title}';`);
 
-  await request.api.postMovie(movie);
+  await request.api.postTvshow(tvshow);
 
   await page.login.do('admin@zombieplus.com', 'pwd123', 'Admin');
 
-  await page.movies.create(
-    movie.title,
-    movie.overview,
-    movie.company,
-    movie.release_year,
-    movie.cover,
-    movie.featured
+  await page.tvshows.create(
+    tvshow.title,
+    tvshow.overview,
+    tvshow.company,
+    tvshow.release_year,
+    tvshow.seasons,
+    tvshow.cover,
+    tvshow.featured
   );
 
-  await page.popup.haveText(`O título 'Dawn of the Dead' já consta em nosso catálogo. Por favor, verifique se há necessidade de atualizações ou correções para este item.`);
+  // Essa mensagem costuma ser padrão para os dois
+  await page.popup.haveText(`O título '${tvshow.title}' já consta em nosso catálogo. Por favor, verifique se há necessidade de atualizações ou correções para este item.`);
 });
 
 test('não deve cadastrar quando os campos obrigatórios não são preenchidos', async ({ page }) => {
   await page.login.do('admin@zombieplus.com', 'pwd123', 'Admin');
 
-  await page.movies.goForm();
-  await page.movies.submit();
+  await page.tvshows.goForm();
+  await page.tvshows.submit();
 
-  await page.movies.alertHaveText([
+  // Agora são 5 campos! (Título, Sinopse, Empresa, Ano de Lançamento e Temporadas)
+  await page.tvshows.alertHaveText([
+    'Campo obrigatório',
     'Campo obrigatório',
     'Campo obrigatório',
     'Campo obrigatório',
@@ -68,19 +77,18 @@ test('não deve cadastrar quando os campos obrigatórios não são preenchidos',
 });
 
 test('deve realizar busca pelo termo zumbi', async ({ page, request }) => {
-  const movies = data.search;
+  const tvshows = data.search;
 
-  for (const movie of movies.data) {
-    await executeSQL(`DELETE FROM movies WHERE title = '${movie.title}';`);
+  for (const tvshow of tvshows.data) {
+    await executeSQL(`DELETE FROM tvshows WHERE title = '${tvshow.title}';`);
   }
 
-  for (const movie of movies.data) {
-    await request.api.postMovie(movie);
+  for (const tvshow of tvshows.data) {
+    await request.api.postTvshow(tvshow);
   }
 
   await page.login.do('admin@zombieplus.com', 'pwd123', 'Admin');
-  await page.movies.search(movies.input);
+  await page.tvshows.search(tvshows.input);
 
-  await page.movies.tableHave(movies.outputs)
-
+  await page.tvshows.tableHave(tvshows.outputs);
 });
