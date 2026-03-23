@@ -45,7 +45,7 @@ export class TvShows {
   }
 
   async search(target) {
-    await this.page.locator('a[href$="tvshows"]').click(); // Garante que tá na aba certa antes de buscar
+    await this.page.locator('a[href$="tvshows"]').click();
     await this.page.getByPlaceholder('Busque pelo nome').fill(target);
     await this.page.click('.actions button');
   }
@@ -60,7 +60,7 @@ export class TvShows {
   }
 
   async remove(title) {
-    await this.page.locator('a[href$="tvshows"]').click(); // Garante que tá na aba de séries
+    await this.page.locator('a[href$="tvshows"]').click();
     await this.page.getByRole('row', { name: title }).getByRole('button').click();
     await this.page.click('.confirm-removal');
   }
