@@ -14,7 +14,7 @@ const test = base.extend({
     context['login'] = new Login(page);
     context['movies'] = new Movies(page);
     context['popup'] = new Popup(page);
-    context['tvshows'] = new TvShows(page); // <-- Mágica feita aqui!
+    context['tvshows'] = new TvShows(page);
 
     await use(context);
   },

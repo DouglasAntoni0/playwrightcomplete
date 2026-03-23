@@ -11,8 +11,4 @@ export class Popup {
     await expect(element).toHaveText(message);
   }
 
-  //async haveText(message) {
-   // await expect(this.toast).toHaveText(message);
-   // await expect(this.toast).not.toBeVisible({ timeout: 5000 });
- // }
 }

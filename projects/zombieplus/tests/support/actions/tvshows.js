@@ -6,9 +6,7 @@ export class TvShows {
   }
 
   async goForm() {
-    // 1. Clica na aba de Séries de TV no menu lateral
     await this.page.locator('a[href$="tvshows"]').click();
-    // 2. Clica no botão de cadastrar (o botão com o '+')
     await this.page.locator('a[href$="register"]').click();
   }
 
@@ -16,7 +14,7 @@ export class TvShows {
     await this.page.getByRole('button', { name: 'Cadastrar' }).click();
   }
 
-  // Olha o parâmetro 'seasons' aqui!
+
   async create(title, overview, company, release_year, seasons, cover, featured) {
     await this.goForm();
 
@@ -31,7 +29,6 @@ export class TvShows {
       await this.page.locator('.react-select__option').filter({ hasText: release_year.toString() }).click();
     }
 
-    // Aqui a mágica acontece: preenchendo o número de temporadas!
     if (seasons) {
         await this.page.locator('#seasons').fill(seasons.toString());
     }

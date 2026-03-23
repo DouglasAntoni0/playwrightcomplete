@@ -60,7 +60,6 @@ export class Api {
     expect(response.ok()).toBeTruthy();
   }
 
-  // 👇 NOSSO NOVO MONSTRINHO DAS SÉRIES CHEGOU AQUI 👇
   async postTvshow(tvshow) {
     const companyId = await this.getCompanyIdByName(tvshow.company);
 
@@ -74,7 +73,7 @@ export class Api {
         overview: tvshow.overview,
         company_id: companyId,
         release_year: tvshow.release_year,
-        seasons: tvshow.seasons, // Temporadas na área!
+        seasons: tvshow.seasons,
         featured: tvshow.featured
       }
     });

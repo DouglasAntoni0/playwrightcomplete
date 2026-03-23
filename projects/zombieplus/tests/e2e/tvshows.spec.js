@@ -1,11 +1,10 @@
 import { expect, test } from '../support';
-import data from '../support/fixtures/tvshows.json'; // Puxando o arquivo certo agora!
+import data from '../support/fixtures/tvshows.json';
 import { executeSQL } from '../support/database';
 
 test('deve cadastrar uma nova série', async ({ page }) => {
   const tvshow = data.create;
 
-  // Limpando a bagunça na tabela certa
   await executeSQL(`DELETE FROM tvshows WHERE title = '${tvshow.title}';`);
 
   await page.login.do('admin@zombieplus.com', 'pwd123', 'Admin');
@@ -15,12 +14,11 @@ test('deve cadastrar uma nova série', async ({ page }) => {
     tvshow.overview,
     tvshow.company,
     tvshow.release_year,
-    tvshow.seasons, // O nosso mais novo integrante da família
+    tvshow.seasons,
     tvshow.cover,
     tvshow.featured
   );
 
-  // Atenção: Confirme se no site aparece "A série" ou "O título". Coloquei "A série" seguindo a lógica.
   await page.popup.haveText(`A série '${tvshow.title}' foi adicionada ao catálogo.`);
 });
 
@@ -28,7 +26,6 @@ test('deve poder remover uma série', async ({ page, request }) => {
   const tvshow = data.to_remove;
   await executeSQL(`DELETE FROM tvshows WHERE title = '${tvshow.title}';`);
   
-  // Confere lá no seu api/index.js se a função de cadastrar série via API é postTvshow mesmo!
   await request.api.postTvshow(tvshow); 
   
   await page.login.do('admin@zombieplus.com', 'pwd123', 'Admin');
@@ -56,7 +53,6 @@ test('não deve cadastrar quando o titulo já existe', async ({ page, request })
     tvshow.featured
   );
 
-  // Essa mensagem costuma ser padrão para os dois
   await page.popup.haveText(`O título '${tvshow.title}' já consta em nosso catálogo. Por favor, verifique se há necessidade de atualizações ou correções para este item.`);
 });
 
@@ -66,13 +62,12 @@ test('não deve cadastrar quando os campos obrigatórios não são preenchidos',
   await page.tvshows.goForm();
   await page.tvshows.submit();
 
-  // Agora são 5 campos! (Título, Sinopse, Empresa, Ano de Lançamento e Temporadas)
   await page.tvshows.alertHaveText([
     'Campo obrigatório',
     'Campo obrigatório',
     'Campo obrigatório',
     'Campo obrigatório',
-    'Campo obrigatório (apenas números)', // <-- Olha a diferença aqui!
+    'Campo obrigatório (apenas números)',
   ]);
 });
 
