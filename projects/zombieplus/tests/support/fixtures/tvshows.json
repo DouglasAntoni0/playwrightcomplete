@@ -1,17 +1,17 @@
 {
   "create": {
-    "title": "The Walking Dead Zumbi",
+    "title": "The Walking Dead",
     "overview": "O xerife Rick Grimes acorda de um coma e descobre que o mundo tá cheio de zumbis feios.",
-    "company": "AMC",
+    "company": "Amazon Studios",
     "release_year": 2010,
     "seasons": 11,
     "featured": true,
     "cover": "/covers/tvshows/twd.png"
   },
   "duplicate": {
-    "title": "Fear The Walking Dead Zumbis",
+    "title": "Fear The Walking Dead",
     "overview": "O começo do apocalipse zumbi focado em outra família que arruma muita confusão.",
-    "company": "AMC",
+    "company": "Netflix",
     "release_year": 2015,
     "seasons": 8,
     "featured": false,
@@ -20,10 +20,47 @@
   "to_remove": {
     "title": "Z Nation",
     "overview": "Um grupo tenta levar o único sobrevivente imune ao vírus através do país.",
-    "company": "Syfy",
+    "company": "Columbia Pictures",
     "release_year": 2014,
     "seasons": 5,
     "featured": false,
     "cover": "/covers/tvshows/404.png"
+  },
+  "search": {
+    "input": "zumbi",
+    "outputs": [
+      "The Walking Zumbi Dead",
+      "Fear The Zumbi Dead",
+      "Zumbi Nation"
+    ],
+    "data": [
+      {
+        "title": "The Walking Zumbi Dead",
+        "overview": "Rick acorda e o mundo tá cheio de zumbi.",
+        "company": "Amazon Studios",
+        "release_year": 2010,
+        "seasons": 11,
+        "featured": false,
+        "cover": "/covers/tvshows/twd.png"
+      },
+      {
+        "title": "Fear The Zumbi Dead",
+        "overview": "O começo do apocalipse zumbi.",
+        "company": "Netflix",
+        "release_year": 2015,
+        "seasons": 8,
+        "featured": false,
+        "cover": "/covers/tvshows/ftwd.png"
+      },
+      {
+        "title": "Zumbi Nation",
+        "overview": "Um grupo tenta levar o imune ao vírus através do país.",
+        "company": "Columbia Pictures",
+        "release_year": 2014,
+        "seasons": 5,
+        "featured": false,
+        "cover": "/covers/tvshows/404.png"
+      }
+    ]
   }
 }

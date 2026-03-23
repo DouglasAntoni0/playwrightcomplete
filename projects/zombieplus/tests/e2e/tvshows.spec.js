@@ -72,7 +72,7 @@ test('não deve cadastrar quando os campos obrigatórios não são preenchidos',
     'Campo obrigatório',
     'Campo obrigatório',
     'Campo obrigatório',
-    'Campo obrigatório',
+    'Campo obrigatório (apenas números)', // <-- Olha a diferença aqui!
   ]);
 });
 

@@ -59,4 +59,26 @@ export class Api {
 
     expect(response.ok()).toBeTruthy();
   }
+
+  // 👇 NOSSO NOVO MONSTRINHO DAS SÉRIES CHEGOU AQUI 👇
+  async postTvshow(tvshow) {
+    const companyId = await this.getCompanyIdByName(tvshow.company);
+
+    const response = await this.request.post('http://localhost:3333/tvshows', {
+      headers: {
+        Authorization: this.token,
+        Accept: 'application/json, text/plain, */*'
+      },
+      multipart: {
+        title: tvshow.title,
+        overview: tvshow.overview,
+        company_id: companyId,
+        release_year: tvshow.release_year,
+        seasons: tvshow.seasons, // Temporadas na área!
+        featured: tvshow.featured
+      }
+    });
+
+    expect(response.ok()).toBeTruthy();
+  }
 }
