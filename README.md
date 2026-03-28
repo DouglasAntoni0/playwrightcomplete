@@ -1,44 +1,49 @@
-# 🧟‍♂️ Zombie+ | Framework de Automação E2E e API com Playwright
+# 🧟‍♂️ ZombiePlus - Automação E2E com Playwright 🎭
 
-<div align="center">
-  <img alt="Playwright" src="https://img.shields.io/badge/Playwright-45ba4b?style=for-the-badge&logo=Playwright&logoColor=white">
-  <img alt="JavaScript" src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
-  <img alt="Node.js" src="https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white">
-  <img alt="Docker" src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white">
-  <img alt="PostgreSQL" src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white">
-</div>
+[![Playwright Tests](https://github.com/DouglasAntoni0/playwrightcomplete/actions/workflows/playwright.yml/badge.svg)](https://github.com/DouglasAntoni0/playwrightcomplete/actions/workflows/playwright.yml)
+[![Node.js Version](https://img.shields.io/badge/Node.js-18.x-green.svg)](https://nodejs.org/)
+[![Playwright](https://img.shields.io/badge/Playwright-Enabled-blue.svg)](https://playwright.dev/)
 
-## 📌 Sobre o Projeto
+Bem-vindo ao repositório de testes automatizados do **ZombiePlus**! 🎬🧟‍♀️ 
 
-Este repositório é o resultado do meu desenvolvimento e evolução no curso avançado **"Playwright - Zombie Edition"**. 
+Este projeto foi desenvolvido com o objetivo de criar uma suíte de testes End-to-End (E2E) robusta, rápida e confiável para uma aplicação web de filmes e séries de zumbis, aplicando as melhores práticas do mercado de Qualidade de Software (QA).
 
-O objetivo aqui vai muito além de testes básicos: o foco é aplicar **Engenharia de Qualidade** em uma aplicação web completa (Zombie+), uma plataforma de streaming de vídeo. O framework foi construído para validar o fluxo de ponta a ponta (E2E), garantindo a integridade desde a interface (React) até a camada de serviços (API em Node.js) e o banco de dados (PostgreSQL).
+## 🚀 Sobre o Projeto
 
-## 🚧 Status do Projeto
+O foco principal aqui não é apenas "automatizar cliques", mas construir uma arquitetura de testes escalável. Para evitar o temido *flaky test* (testes intermitentes) e lentidão, o projeto manipula o estado da aplicação diretamente via **Banco de Dados (PostgreSQL)** e **Requests de API**, garantindo que cada cenário de teste seja independente e tenha suas pré-condições atendidas em milissegundos.
 
-**Em desenvolvimento contínuo.** Atualmente, estou implementando novas suítes de teste e aprimorando a arquitetura do framework à medida que avanço nos módulos do curso. O repositório é atualizado frequentemente com novas práticas de QA e refatorações.
+## 🛠️ Arquitetura e Padrões Aplicados
 
-## 🚀 Diferenciais Técnicos e Arquitetura Aplicada
+- **App Actions (Custom Page Object Model):** Em vez do POM tradicional, utilizamos o padrão de *Actions* (`tests/support/actions/`) e *Components*, isolando a lógica de interação com a UI e tornando os testes mais semânticos e fáceis de dar manutenção.
+- **Data Preparation via API & DB:** Criação e limpeza de massa de dados diretamente no banco de dados (`tests/support/database.js`) e via API (`tests/support/api/index.js`) antes da execução da UI.
+- **Geração de Dados Dinâmicos:** Uso da biblioteca Faker.js para criar dados de teste aleatórios e únicos.
+- **Continuous Integration (CI):** Pipeline configurada com GitHub Actions para rodar os testes automaticamente a cada push.
+- **Relatórios:** Configurado com `playwright-tesults-reporter` para visualização clara dos resultados.
 
-Para que os testes sejam rápidos, estáveis e escaláveis, apliquei os seguintes conceitos e padrões de projeto exigidos pelo mercado:
+## 💻 Tecnologias Utilizadas
 
-- **Page Object Model (POM) Avançado:** Separação estrita de responsabilidades, isolando elementos da página e extraindo componentes reutilizáveis (como modais e alertas Toast) para garantir código limpo e de fácil manutenção (DRY).
-- **Custom Fixtures:** Criação de fixtures personalizadas no Playwright para encapsular a inicialização de páginas e massa de dados, deixando os arquivos de teste (`.spec`) limpos e focados apenas na regra de negócio.
-- **Data Preparation via API/DB:** Consumo de rotas de API e queries diretas no banco de dados para preparar cenários (ex: criar um usuário via API antes de testar o login na UI), evitando a lentidão de fazer setups inteiramente pela interface.
-- **Network Interception (Mocking):** Interceptação de rotas e manipulação de respostas de rede para simular cenários de erro do servidor (HTTP 500, etc) sem precisar derrubar o backend real.
-- **Orquestração com Docker:** Banco de dados e serviços locais subindo via `docker-compose`, garantindo que o ambiente de testes seja imutável e fácil de reproduzir em qualquer máquina.
+- **[Playwright](https://playwright.dev/):** Framework principal para automação web.
+- **Node.js & JavaScript:** Base do projeto.
+- **Faker.js:** Para geração de dados fictícios.
+- **Dotenv:** Para gerenciamento seguro das variáveis de ambiente.
+- **PostgreSQL (pg):** Para conexão direta e queries no banco de dados da aplicação.
+- **Docker & Docker Compose:** Para subir o banco de dados (Postgres) e o gerenciador (pgAdmin) isolados em uma rede customizada (Skynet 🤖).
 
-## 📂 Estrutura do Ecossistema
+## 🧪 O que foi testado?
 
-O repositório abriga tanto a aplicação (SUT - System Under Test) quanto o framework de automação:
+A suíte cobre os principais fluxos de negócio do ZombiePlus:
+- 🚪 **Login:** Fluxos de autenticação, sucesso, senhas inválidas e bloqueios.
+- 📬 **Leads:** Captação de e-mails na landing page (validações de campos obrigatórios e duplicidade).
+- 🎬 **Filmes (Movies):** Cadastro, listagem, remoção e validação de regras de negócio de filmes.
+- 📺 **Séries (TV Shows):** Fluxos completos de CRUD para séries de TV.
 
-```text
-📦 playwrightcomplete
- ┣ 📂 apps/zombieplus           # Código fonte da aplicação alvo
- ┃ ┣ 📂 api                     # Backend RESTful (Node.js/Express)
- ┃ ┣ 📂 web                     # Frontend (React)
- ┃ ┗ 📜 docker-compose.yml      # Infra e Banco de Dados (Postgres/Redis)
- ┣ 📂 projects/zombieplus       # Framework de Automação (Playwright)
- ┃ ┣ 📂 tests                   # Suítes de testes E2E e de Integração
- ┃ ┣ 📂 pages                   # Page Objects e Componentes de UI isolados
- ┃ ┗ 📜 playwright.config.js    # Configurações globais, retries, traces e workers
+## ⚙️ Como executar na sua máquina
+
+### Pré-requisitos
+- Node.js (v18 ou superior)
+- Docker e Docker Compose instalados
+
+### 1. Clonando o repositório
+```bash
+git clone [https://github.com/DouglasAntoni0/playwrightcomplete.git](https://github.com/DouglasAntoni0/playwrightcomplete.git)
+cd playwrightcomplete
