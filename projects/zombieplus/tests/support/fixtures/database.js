@@ -1,9 +1,11 @@
+require('../helpers/env')();
+
 const DbConfig = {
-  user: 'neondb_owner',
-  host: 'ep-rough-silence-ah36vyer-pooler.c-3.us-east-1.aws.neon.tech',
-  database: 'neondb',
-  password: 'npg_gZy5VKI7vxzw',
-  port: 5432,
+  user: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  database: process.env.DB_DATABASE,
+  password: process.env.DB_PASSWORD,
+  port: process.env.DB_PORT,
   ssl: {
     rejectUnauthorized: false,
   },
