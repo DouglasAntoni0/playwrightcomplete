@@ -107,7 +107,7 @@ Essa combinação reduz tempo de execução, evita setup desnecessário pela UI 
 ## 🗂️ Estrutura do Repositório
 
 ```text
-C:\QAx
+playwrightcomplete/
 ├─ .github/
 │  └─ workflows/
 │     └─ playwright.yml
@@ -348,15 +348,24 @@ npm run dev
 
 ### 4. Configure o ambiente do framework de testes
 
-Crie um arquivo `.env` na raiz do repositório ou em `projects/zombieplus`:
+Copie o exemplo seguro para o local que vai usar:
+
+```bash
+cp .env.example .env
+# ou
+cp projects/zombieplus/.env.example projects/zombieplus/.env
+```
+
+O arquivo deve conter os endpoints e credenciais técnicas do seu ambiente local, sem versionar valores reais:
 
 ```env
 BASE_URL=http://localhost:3000
 BASE_API=http://localhost:3333
+API_URL=http://localhost:3333
 DB_HOST=localhost
-DB_DATABASE=postgres
-DB_USER=postgres
-DB_PASSWORD=pwd123
+DB_DATABASE=zombieplus
+DB_USER=change-me
+DB_PASSWORD=change-me
 DB_PORT=5432
 TOKEN=
 ```
