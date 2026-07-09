@@ -77,20 +77,31 @@ jobs:
         run: npx sequelize db:seed:all
         working-directory: apps/zombieplus/api
 
-      - name: Start API
-        run: nohup npm run dev > "$RUNNER_TEMP/api.log" 2>&1 &
-        working-directory: apps/zombieplus/api
-
-      - name: Start Web
-        run: nohup npm run dev > "$RUNNER_TEMP/web.log" 2>&1 &
-        working-directory: apps/zombieplus/web
-
       - name: Install Playwright Browsers
         run: npx playwright install chromium --with-deps
         working-directory: projects/zombieplus
 
-      - name: Wait for servers to be ready
+      - name: Run Playwright tests
         run: |
+          print_logs() {
+            echo "::group::API log"
+            cat "$RUNNER_TEMP/api.log" || true
+            echo "::endgroup::"
+            echo "::group::Web log"
+            cat "$RUNNER_TEMP/web.log" || true
+            echo "::endgroup::"
+          }
+
+          cleanup() {
+            kill "$api_pid" "$web_pid" 2>/dev/null || true
+          }
+
+          npm --prefix apps/zombieplus/api run dev > "$RUNNER_TEMP/api.log" 2>&1 &
+          api_pid=$!
+          npm --prefix apps/zombieplus/web run dev > "$RUNNER_TEMP/web.log" 2>&1 &
+          web_pid=$!
+          trap cleanup EXIT
+
           for url in http://localhost:3333 http://localhost:3000; do
             echo "Waiting for $url"
 
@@ -102,23 +113,21 @@ jobs:
 
               if [ "$attempt" -eq 60 ]; then
                 echo "$url did not become ready"
-                echo "::group::API log"
-                cat "$RUNNER_TEMP/api.log" || true
-                echo "::endgroup::"
-                echo "::group::Web log"
-                cat "$RUNNER_TEMP/web.log" || true
-                echo "::endgroup::"
+                print_logs
                 exit 1
               fi
 
               sleep 2
             done
           done
-        timeout-minutes: 5
 
-      - name: Run Playwright tests
-        run: npx playwright test
-        working-directory: projects/zombieplus
+          (
+            cd projects/zombieplus
+            npx playwright test
+          ) || {
+            print_logs
+            exit 1
+          }
 
       - name: Upload Test Report
         if: always()
