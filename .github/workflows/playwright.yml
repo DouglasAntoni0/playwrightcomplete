@@ -78,11 +78,11 @@ jobs:
         working-directory: apps/zombieplus/api
 
       - name: Start API
-        run: npm run dev &
+        run: nohup npm run dev > "$RUNNER_TEMP/api.log" 2>&1 &
         working-directory: apps/zombieplus/api
 
       - name: Start Web
-        run: npm run dev &
+        run: nohup npm run dev > "$RUNNER_TEMP/web.log" 2>&1 &
         working-directory: apps/zombieplus/web
 
       - name: Install Playwright Browsers
@@ -90,7 +90,30 @@ jobs:
         working-directory: projects/zombieplus
 
       - name: Wait for servers to be ready
-        run: npx wait-on http://localhost:3333 http://localhost:3000
+        run: |
+          for url in http://localhost:3333 http://localhost:3000; do
+            echo "Waiting for $url"
+
+            for attempt in {1..60}; do
+              if curl --silent --fail "$url" > /dev/null; then
+                echo "$url is ready"
+                break
+              fi
+
+              if [ "$attempt" -eq 60 ]; then
+                echo "$url did not become ready"
+                echo "::group::API log"
+                cat "$RUNNER_TEMP/api.log" || true
+                echo "::endgroup::"
+                echo "::group::Web log"
+                cat "$RUNNER_TEMP/web.log" || true
+                echo "::endgroup::"
+                exit 1
+              fi
+
+              sleep 2
+            done
+          done
         timeout-minutes: 5
 
       - name: Run Playwright tests
