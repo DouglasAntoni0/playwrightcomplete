@@ -364,9 +364,10 @@ BASE_API=http://localhost:3333
 API_URL=http://localhost:3333
 DB_HOST=localhost
 DB_DATABASE=zombieplus
-DB_USER=change-me
-DB_PASSWORD=change-me
+DB_USER=postgres
+DB_PASSWORD=pwd123
 DB_PORT=5432
+PGSSLMODE=disable
 TOKEN=
 ```
 
@@ -412,11 +413,13 @@ npx playwright show-trace test-results/<caminho-do-trace>.zip
 | --- | --- |
 | `BASE_URL` | URL base da aplicação web usada pela automação |
 | `BASE_API` | URL base da API usada pelo helper HTTP |
+| `API_URL` | URL base alternativa da API usada por cenários específicos |
 | `DB_HOST` | Host do PostgreSQL utilizado no setup/cleanup dos testes |
 | `DB_DATABASE` | Nome do banco de dados |
 | `DB_USER` | Usuário do banco |
 | `DB_PASSWORD` | Senha do banco |
 | `DB_PORT` | Porta do banco |
+| `PGSSLMODE` | Modo de SSL do PostgreSQL; use `disable` para o Docker local |
 | `TOKEN` | Token opcional para integração com Tesults |
 
 > O banco apontado pelas variáveis `DB_*` deve ser o mesmo ambiente consumido pela API, para que o estado preparado pela suíte reflita corretamente na aplicação.

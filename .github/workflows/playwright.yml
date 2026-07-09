@@ -13,14 +13,39 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: pwd123
+          POSTGRES_DB: zombieplus
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d postgres"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     env:
       BASE_API: http://localhost:3333
       BASE_URL: http://localhost:3000
-      DB_HOST: ${{ secrets.DB_HOST }}
-      DB_DATABASE: ${{ secrets.DB_DATABASE }}
-      DB_USER: ${{ secrets.DB_USER }}
-      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      API_URL: http://localhost:3333
+      APP_NAME: zombieplus-api
+      APP_URL: http://localhost
+      FRONT_URL: http://localhost:3000
+      NODE_ENV: development
+      PORT: 3333
+      DB_DIALECT: postgres
+      DB_HOST: localhost
+      DB_NAME: zombieplus
+      DB_DATABASE: zombieplus
+      DB_USER: postgres
+      DB_PASS: pwd123
+      DB_PASSWORD: pwd123
       DB_PORT: 5432
+      PGSSLMODE: disable
       TOKEN: ${{ secrets.TOKEN }}
 
     steps:
@@ -43,6 +68,14 @@ jobs:
       - name: Install Dependencies for Playwright
         run: npm install
         working-directory: projects/zombieplus
+
+      - name: Run Database Migrations
+        run: npx sequelize db:migrate
+        working-directory: apps/zombieplus/api
+
+      - name: Run Database Seeds
+        run: npx sequelize db:seed:all
+        working-directory: apps/zombieplus/api
 
       - name: Start API
         run: npm run dev &

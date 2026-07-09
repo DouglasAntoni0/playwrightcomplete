@@ -5,7 +5,9 @@ services:
     container_name: pgdb
     image: postgres
     environment:
+      POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "pwd123"
+      POSTGRES_DB: "zombieplus"
     ports:
       - "5432:5432"
     networks:
