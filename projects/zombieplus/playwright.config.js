@@ -1,7 +1,7 @@
 require('./tests/support/helpers/env')();
-import { defineConfig, devices } from '@playwright/test';
+const { defineConfig, devices } = require('@playwright/test');
 
-export default defineConfig({
+module.exports = defineConfig({
   testDir: './tests',
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
@@ -9,7 +9,8 @@ export default defineConfig({
   workers: process.env.CI ? 2 : undefined,
   reporter: [
     ['dot'],
-    ['playwright-tesults-reporter', { 'tesults-target': process.env.TOKEN }]
+    ['html', { outputFolder: 'playwright-report', open: 'never' }],
+    ...(process.env.TOKEN ? [['playwright-tesults-reporter', { 'tesults-target': process.env.TOKEN }]] : [])
   ],
   use: {
     trace: 'on-first-retry',
